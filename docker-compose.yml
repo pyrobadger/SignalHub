@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: signalhub-db
+    restart: always
+    environment:
+      POSTGRES_USER: signalhub_admin
+      POSTGRES_PASSWORD: secure_db_password_99
+      POSTGRES_DB: signalhub_prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: signalhub-cache
+    restart: always
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: signalhub-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - DATABASE_URL=postgresql://signalhub_admin:secure_db_password_99@db:5432/signalhub_prod?schema=public
+      - REDIS_URL=redis://redis:6379
+      - JWT_ACCESS_SECRET=super_secret_access_key_158329
+      - JWT_REFRESH_SECRET=super_secret_refresh_key_982314
+      - ACCESS_TOKEN_EXPIRY=15m
+      - REFRESH_TOKEN_EXPIRY=7d
+      - RATE_LIMIT_WINDOW_MS=900000
+      - RATE_LIMIT_MAX=100
+      - CORS_ORIGIN=http://localhost:5173
+    depends_on:
+      - db
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: signalhub-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
