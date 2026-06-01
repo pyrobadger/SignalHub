@@ -320,3 +320,39 @@ h1, h2, h3, h4, h5, h6 {
 .pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Responsive Helper Utilities */
+@media (max-width: 640px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+}
+
+.dashboard-controls-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .dashboard-controls-header {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.dashboard-analytics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .dashboard-analytics-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}

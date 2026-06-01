@@ -226,7 +226,7 @@ const Dashboard = () => {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <div style={{ textAlign: 'right', display: 'none', sm: 'block' }}>
+          <div className="hidden-mobile" style={{ textAlign: 'right' }}>
             <div style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-primary)' }}>{user?.name}</div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{user?.email} ({user?.role})</div>
           </div>
@@ -316,16 +316,7 @@ const Dashboard = () => {
 
         {/* 4. Signals management panel controls */}
         <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem' }}>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            md: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'stretch',
-            md: 'alignItems: center',
-            gap: '1.5rem',
-            marginBottom: '2rem',
-          }}>
+          <div className="dashboard-controls-header">
             <div>
               <h2 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-title)', marginBottom: '0.25rem' }}>
                 Trading Signals Node
@@ -492,7 +483,7 @@ const Dashboard = () => {
             <Activity size={18} style={{ color: 'var(--primary)' }} />
             PLATFORM ANALYTICS ENGINE
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', md: '2fr 1fr', gap: '2rem', alignItems: 'center' }}>
+          <div className="dashboard-analytics-grid">
             {/* SVG line chart */}
             <div style={{ height: '180px', background: 'rgba(7, 10, 19, 0.4)', borderRadius: '12px', border: '1px solid var(--border-color)', position: 'relative', overflow: 'hidden', padding: '1rem' }}>
               <div style={{ position: 'absolute', top: '10px', left: '10px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Terminal Signal Mock chart</div>
